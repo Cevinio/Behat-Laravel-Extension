@@ -12,21 +12,21 @@ final class LaravelDriverFactory implements DriverFactory
 {
     public const LARAVEL_DRIVER = 'laravel';
 
-    public function getDriverName()
+    public function getDriverName(): string
     {
         return self::LARAVEL_DRIVER;
     }
 
-    public function supportsJavascript()
+    public function supportsJavascript(): bool
     {
         return false;
     }
 
-    public function configure(ArrayNodeDefinition $builder)
+    public function configure(ArrayNodeDefinition $builder): void
     {
     }
 
-    public function buildDriver(array $config)
+    public function buildDriver(array $config): Definition
     {
         return new Definition(
             LaravelDriver::class,

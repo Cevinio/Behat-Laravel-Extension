@@ -2,8 +2,8 @@
 
 namespace Cevinio\Behat\Context;
 
-use Illuminate\Foundation\Application;
 use Cevinio\Behat\ServiceContainer\LaravelFactory;
+use Illuminate\Foundation\Application;
 
 trait LaravelAware
 {
@@ -22,5 +22,9 @@ trait LaravelAware
     public function app(): Application
     {
         return $this->factory->get();
+    }
+
+    public function initLaravelApplication(Application $application): void
+    {
     }
 }

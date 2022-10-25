@@ -11,12 +11,11 @@
     },
     "require": {
         "php": ">=7.3",
-        "behat/behat": "^3.10",
-        "friends-of-behat/mink-browserkit-driver": "^1.5"
-    },
-    "require-dev": {
+        "behat/behat": "^3.11",
+        "behat/mink-browserkit-driver": "^2.1",
         "friends-of-behat/mink-extension": "^2.5",
-        "laravel/laravel": "~5.8.0",
-        "symfony/symfony": "^4.4"
+        "laravel/framework": ">= 5.8",
+        "symfony/event-dispatcher": ">= 4.4",
+        "symfony/http-kernel": ">= 4.4"
     }
 }

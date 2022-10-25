@@ -19,25 +19,35 @@ final class LaravelAwareInitializer implements EventSubscriberInterface, Context
         $this->factory = $factory;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            SuiteTested::BEFORE => [ 'rebootLaravel', 15 ],
-            ScenarioTested::BEFORE => [ 'rebootLaravel', 15 ],
+            SuiteTested::BEFORE => [ 'createApplication', 25 ],
+            SuiteTested::AFTER_SETUP => [ 'flushApplication', -25 ],
+            ScenarioTested::BEFORE => [ 'createApplication', 25 ],
+            ScenarioTested::AFTER => [ 'flushApplication', -25 ],
+            SuiteTested::BEFORE_TEARDOWN => [ 'createApplication', 25 ],
+            SuiteTested::AFTER => [ 'flushApplication', -25 ],
         ];
     }
 
-    public function initializeContext(Context $context)
+    public function initializeContext(Context $context): void
     {
         if (false === ($context instanceof LaravelAwareContext)) {
             return;
         }
 
         $context->setLaravelFactory($this->factory);
+        $this->factory->registerContext($context);
     }
 
-    public function rebootLaravel(): void
+    public function createApplication(): void
     {
-        $this->factory->reboot();
+        $this->factory->createApplication();
+    }
+
+    public function flushApplication(): void
+    {
+        $this->factory->flush();
     }
 }

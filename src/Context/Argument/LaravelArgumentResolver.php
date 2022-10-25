@@ -16,13 +16,11 @@ final class LaravelArgumentResolver implements ArgumentResolver
         $this->factory = $factory;
     }
 
-    public function resolveArguments(ReflectionClass $classReflection, array $arguments)
+    public function resolveArguments(ReflectionClass $classReflection, array $arguments): array
     {
-        $app = $this->factory->get();
-
-        return array_map(function ($argument) use ($app) {
+        return array_map(function ($argument) {
             if (true === is_string($argument) && '' !== $argument && '@' === $argument[0]) {
-                return $app->make(substr($argument, 1));
+                return $this->factory->get()->make(substr($argument, 1));
             }
 
             return $argument;

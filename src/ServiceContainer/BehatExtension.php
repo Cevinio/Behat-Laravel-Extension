@@ -22,12 +22,12 @@ final class BehatExtension implements Extension
     public const LARAVEL_INITIALIZER = 'laravel.initializer';
     public const LARAVEL_RESOLVER = 'laravel.resolver';
 
-    public function getConfigKey()
+    public function getConfigKey(): string
     {
         return self::CONFIG_KEY;
     }
 
-    public function initialize(ExtensionManager $extensionManager)
+    public function initialize(ExtensionManager $extensionManager): void
     {
         /** @var MinkExtension $minkExtension */
         $minkExtension = $extensionManager->getExtension('mink');
@@ -37,15 +37,15 @@ final class BehatExtension implements Extension
         }
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
     }
 
-    public function configure(ArrayNodeDefinition $builder)
+    public function configure(ArrayNodeDefinition $builder): void
     {
     }
 
-    public function load(ContainerBuilder $container, array $config)
+    public function load(ContainerBuilder $container, array $config): void
     {
         $bootstrapPath = $container->getParameter('paths.base') . '/bootstrap/app.php';
 

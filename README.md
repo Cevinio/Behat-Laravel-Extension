@@ -10,7 +10,7 @@ This extension offers an incredibly simple (and fast) way to begin testing and d
 
 As always, we need to pull in some dependencies through Composer.
 
-    composer require behat/behat behat/mink behat/mink-extension cevinio/behat-laravel-extension --dev
+    composer require behat/behat behat/mink cevinio/behat-laravel-extension --dev
 
 This will give us access to Behat, Mink, and, of course, the Laravel extension.
 
@@ -47,28 +47,24 @@ It should set
 features/bootstrap/FeatureContext.php
 ~~~ 
 
-At this point you should set it to extend MinkContext. 
+At this point you should set it to extend MinkContext and implement LaravelAwareContext.
+You can use the LaravelAware trait to get access to the Application via $this->app().
 
 ~~~
 
 <?php
 
-use Behat\Behat\Hook\Scope\AfterStepScope;
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-#This will be needed if you require "behat/mink-selenium2-driver"
-#use Behat\Mink\Driver\Selenium2Driver;
 use Behat\MinkExtension\Context\MinkContext;
+use Cevinio\Behat\Context\LaravelAware;
+use Cevinio\Behat\Context\LaravelAwareContext;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
+class FeatureContext extends MinkContext implements LaravelAwareContext
 {
-
+    use LaravelAware;
+}
 ~~~ 
 
 

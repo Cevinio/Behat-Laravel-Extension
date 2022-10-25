@@ -9,20 +9,23 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 final class LaravelDriver extends BrowserKitDriver
 {
+    /** @var string|null */
     private $baseUrl;
 
     public function __construct(LaravelFactory $factory, $baseUrl = null)
     {
         $this->baseUrl = $baseUrl;
 
-        $this->setApplication($factory->get());
-
-        $factory->register($this);
+        $factory->registerDriver($this);
     }
 
     /** @internal */
-    public function setApplication(Application $app): void
+    public function refreshApplication(Application $app): void
     {
+        if (true === $this->isStarted()) {
+            $this->stop();
+        }
+
         parent::__construct(new HttpKernelBrowser($app), $this->baseUrl);
     }
 }
