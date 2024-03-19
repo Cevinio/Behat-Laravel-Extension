@@ -8,12 +8,9 @@ use Behat\Behat\Context\Argument\ArgumentResolver;
 
 final class LaravelArgumentResolver implements ArgumentResolver
 {
-    /** @var LaravelFactory */
-    private $factory;
-
-    public function __construct(LaravelFactory $factory)
-    {
-        $this->factory = $factory;
+    public function __construct(
+        private readonly LaravelFactory $factory,
+    ) {
     }
 
     public function resolveArguments(ReflectionClass $classReflection, array $arguments): array

@@ -31,10 +31,7 @@ final class BehatExtension implements Extension
     {
         /** @var MinkExtension $minkExtension */
         $minkExtension = $extensionManager->getExtension('mink');
-
-        if (null !== $minkExtension) {
-            $minkExtension->registerDriverFactory(new LaravelDriverFactory());
-        }
+        $minkExtension?->registerDriverFactory(new LaravelDriverFactory());
     }
 
     public function process(ContainerBuilder $container): void
@@ -43,13 +40,17 @@ final class BehatExtension implements Extension
 
     public function configure(ArrayNodeDefinition $builder): void
     {
+        $builder
+            ->children()->scalarNode('bootstrap_path')->defaultValue('bootstrap/app.php')->end()
+            ->scalarNode('env_path')->defaultValue(null);
     }
 
     public function load(ContainerBuilder $container, array $config): void
     {
-        $bootstrapPath = $container->getParameter('paths.base') . '/bootstrap/app.php';
+        $bootstrapPath = $container->getParameter('paths.base') . '/' . $config['bootstrap_path'];
+        $envPath = $config['env_path'];
 
-        $definition = new Definition(LaravelFactory::class, [ $bootstrapPath ]);
+        $definition = new Definition(LaravelFactory::class, [ $bootstrapPath, $envPath ]);
         $container->setDefinition(self::LARAVEL_FACTORY, $definition);
 
         $definition = new Definition(LaravelAwareInitializer::class, [ new Reference(self::LARAVEL_FACTORY) ]);
