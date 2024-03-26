@@ -5,6 +5,9 @@ This extension offers an incredibly simple (and fast) way to begin testing and d
 - **Environments:** Specifying custom environment files (like the `.env` one) for different app environments is a little tricky in Laravel. This extension handles that for you automatically.
 - **Access Laravel:** You instantly have access to Laravel (things like facades and such) from your `FeatureContext` file.
 
+> This repository is forked from [laracasts/Behat-Laravel-Extension](https://github.com/laracasts/Behat-Laravel-Extension) because it was no longer being maintained.  
+> Credits go to [Jeffrey Way](https://github.com/JeffreyWay) for originally creating this extension.
+
 # 1. Install
 
 Require the package as a dev dependency via Composer.
